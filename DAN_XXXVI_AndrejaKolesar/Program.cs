@@ -49,6 +49,31 @@ namespace DAN_XXXVI_AndrejaKolesar
 
         static void Main(string[] args)
         {
+            Thread t1 = new Thread(MatrixGenerator)
+            {
+                Name = "Matrix_generator"
+            };
+            Thread t2 = new Thread(NumberGenerator)
+            {
+                Name = "Two_digits_number_generator"
+            };
+
+            t1.Start();
+            t2.Start();
+
+            t1.Join();
+            t2.Join();
+
+            for(int i=0; i<60; i++)
+            {
+                for(int j = 0; j<60; j++)
+                {
+                    Console.Write( matrix[i,j] + " ");
+                }
+                Console.WriteLine();
+            }
+
+            Console.ReadKey();
 
 
         }
