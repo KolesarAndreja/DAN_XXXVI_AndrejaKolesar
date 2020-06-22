@@ -57,7 +57,9 @@ namespace DAN_XXXVI_AndrejaKolesar
                 Monitor.Pulse(locker);
             }
         }
-
+        /// <summary>
+        /// Make array that contain only odd numbers from matrix and write items from this array into file OddNumbers.txt
+        /// </summary>
         public static void LogIntoFile()
         {
             //get only odd numbers from the matrix
@@ -77,15 +79,12 @@ namespace DAN_XXXVI_AndrejaKolesar
             }
         }
 
-        //When OddNumbers.txt is finished with writing, read data and print them on console
+        //When OddNumbers.txt has finished with writing, read data from file and print them
         public static void ReadFromFile()
         {
             lock (fileName)
             {
-                while (!File.Exists(fileName))
-                {
-                    Monitor.Wait(fileName);
-                }
+                Monitor.Wait(fileName);
                 using (StreamReader sr = File.OpenText(fileName))
                 {
                     string s;
@@ -99,12 +98,6 @@ namespace DAN_XXXVI_AndrejaKolesar
 
         static void Main(string[] args)
         {
-            //If File with this fileName exist, delete it.
-            if (File.Exists(fileName))
-            {
-                File.Delete(fileName);
-            }
-
             Thread t1 = new Thread(MatrixGenerator)
             {
                 Name = "Matrix_generator"
@@ -135,8 +128,6 @@ namespace DAN_XXXVI_AndrejaKolesar
             t3.Join();
             t4.Join();
             Console.ReadKey();
-
-
         }
     }
 }
